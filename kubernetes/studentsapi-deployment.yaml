@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: studentsapi
+spec:
+  selector:
+    app: studentsapi
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: studentsapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: studentsapi
+  template:
+    metadata:
+      labels:
+        app: studentsapi
+    spec:
+      containers:
+      - name: studentsapi
+        build:
+          context: .
+          dockerfile: ../StudentsAPI/Dockerfile
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: ConnectionStrings__StudentsAPIContext
+          value: "Server=sqldata;Database=StudentDB;User Id=sa;Password=My!P@ssw0rd1;Encrypt=False"
+        - name: MessageBroker__Host
+          value: "amqp://armzaj:Slaptazodis!1@rabbitmq:5672"
+

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\armin\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: coursesapi
+  name: coursesapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: coursesapi
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\armin\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/compose-default: "true"
+        io.kompose.service: coursesapi
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ConnectionStrings__CoursesAPIContext
+              value: Server=sqldata;Database=CoursesDB;User Id=sa;Password=My!P@ssw0rd1;Encrypt=False
+            - name: MessageBroker__Host
+              value: amqp://armzaj:Slaptazodis!1@rabbitmq:5672
+          image: coursesapi
+          name: coursesapi
+          ports:
+            - containerPort: 8080
+              hostPort: 5081
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}

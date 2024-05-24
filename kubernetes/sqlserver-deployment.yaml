@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sqldata
+spec:
+  selector:
+    app: sqldata
+  ports:
+  - protocol: TCP
+    port: 1433
+    targetPort: 1433
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqldata
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sqldata
+  template:
+    metadata:
+      labels:
+        app: sqldata
+    spec:
+      containers:
+      - name: sqldata
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+        - containerPort: 1433
+        env:
+        - name: SA_PASSWORD
+          value: "My!P@ssw0rd1"
+        - name: ACCEPT_EULA
+          value: "Y"
+        volumeMounts:
+        - name: sqldata-storage
+          mountPath: /var/opt/mssql
+      volumes:
+      - name: sqldata-storage
+        persistentVolumeClaim:
+          claimName: sqldata-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sqldata-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
