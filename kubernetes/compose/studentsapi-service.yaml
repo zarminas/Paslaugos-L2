@@ -9,7 +9,6 @@ metadata:
     io.kompose.service: studentsapi
   name: studentsapi
 spec:
-  type: LoadBalancer
   ports:
     - name: "5082"
       port: 5082

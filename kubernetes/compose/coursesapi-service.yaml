@@ -5,6 +5,7 @@ metadata:
     io.kompose.service: coursesapi
   name: coursesapi
 spec:
+  type: LoadBalancer
   ports:
     - name: "5081"
       port: 5081
