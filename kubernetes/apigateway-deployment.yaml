@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: apigateway
 spec:
+  type: LoadBalancer
   selector:
     app: apigateway
   ports:
@@ -26,7 +27,7 @@ spec:
     spec:
       containers:
         - name: apigateway
-          image: <your_registry>/apigateway
+          image: zarminas/apigateway
           ports:
             - containerPort: 8080
           env:

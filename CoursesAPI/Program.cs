@@ -5,6 +5,7 @@ using System.Security.Policy;
 using Plain.RabbitMQ;
 using RabbitMQ.Client;
 var builder = WebApplication.CreateBuilder(args);
+Console.WriteLine(builder.Configuration.GetConnectionString("CoursesAPIContext"));
 builder.Services.AddDbContext<CoursesAPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CoursesAPIContext") ?? throw new InvalidOperationException("Connection string 'CoursesAPIContext' not found.")));
 

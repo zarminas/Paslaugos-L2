@@ -10,7 +10,6 @@ spec:
     port: 8080
     targetPort: 8080
   type: LoadBalancer
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,9 +27,7 @@ spec:
     spec:
       containers:
       - name: studentsapi
-        build:
-          context: .
-          dockerfile: ../StudentsAPI/Dockerfile
+        image: zarminas/studentsapi
         ports:
         - containerPort: 8080
         env:

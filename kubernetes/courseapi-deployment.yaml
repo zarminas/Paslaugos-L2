@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: coursesapi
 spec:
+  type: LoadBalancer
   selector:
     app: coursesapi
   ports:
@@ -26,7 +27,7 @@ spec:
     spec:
       containers:
         - name: coursesapi
-          image: <your_registry>/coursesapi
+          image: zarminas/coursesapi
           ports:
             - containerPort: 8080
           env:

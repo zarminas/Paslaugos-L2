@@ -1,10 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: C:\Users\armin\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert
-    kompose.version: 1.31.2 (a92241f79)
-  creationTimestamp: null
   labels:
     io.kompose.service: sqldata
   name: sqldata
@@ -17,10 +13,7 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations:
-        kompose.cmd: C:\Users\armin\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert
-        kompose.version: 1.31.2 (a92241f79)
-      creationTimestamp: null
+
       labels:
         io.kompose.network/compose-default: "true"
         io.kompose.service: sqldata
@@ -30,7 +23,7 @@ spec:
             - name: ACCEPT_EULA
               value: "Y"
             - name: SA_PASSWORD
-              value: My!P@ssw0rd1
+              value: P@ssw0rd123!
           image: mcr.microsoft.com/mssql/server:2019-latest
           name: sqldata
           ports:
@@ -38,12 +31,12 @@ spec:
               hostPort: 1433
               protocol: TCP
           resources: {}
-          volumeMounts:
-            - mountPath: /var/opt/mssql
-              name: lab2-sqldata
+          #volumeMounts:
+            #- mountPath: /var/opt/mssql
+              #name: lab2-sqldata
       restartPolicy: Always
-      volumes:
-        - name: lab2-sqldata
-          persistentVolumeClaim:
-            claimName: lab2-sqldata
+      #volumes:
+        #- name: lab2-sqldata
+          #persistentVolumeClaim:
+            #claimName: lab2-sqldata
 status: {}
